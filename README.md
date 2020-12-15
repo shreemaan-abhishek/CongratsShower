@@ -5,6 +5,6 @@ Wanna use it in your project? Just copy and paste the codebase into your project
 
 # DEMO:
 
-Download demo from: https://github.com/DopeDevX/CongratsShower/raw/master/DEMO.apk
+Download demo app from: https://github.com/DopeDevX/CongratsShower/raw/master/DEMO.apk
 
 [![Watch the video](https://i.stack.imgur.com/ezpUI.gif)](https://youtu.be/vt5fpE0bzSY)
