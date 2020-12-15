@@ -1,5 +1,5 @@
 # CongratsShower
-Beautiful falling paper pieces animation built using Kotlin and XML.
+Beautiful falling paper pieces animation in an Android App, built using Kotlin and XML. A highly reusable and customizable module that can be used in games, welcome screens, and whatnot.
 
 Wanna use it in your project? Just copy and paste the codebase into your project and that's it!
 
