@@ -26,7 +26,7 @@ Download demo app from: https://github.com/DopeDevX/CongratsShower/raw/master/DE
     ```
     	dependencies {
             ...
-	          implementation 'com.github.DopeDevX:CongratsShower:v0.1.69.420' // add this line
+	          implementation 'com.github.DopeDevX:CongratsShower:1.69.420' // add this line
             ...
 	        }
     ```
