@@ -6,6 +6,7 @@ import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
 import android.content.Context
 import android.graphics.Color
+import android.graphics.drawable.Drawable
 import android.os.Handler
 import android.os.Looper
 import android.util.DisplayMetrics
@@ -17,7 +18,7 @@ import androidx.appcompat.widget.AppCompatImageView
 import androidx.core.content.ContextCompat
 import java.util.*
 
-class CongratsShower(var parent: ViewGroup, var context: Context) {
+class CongratsShower {
     /**
      *  Height and Width of the drawable which will be used for positioning the paper piece
      *  at the start and end of the animation.
@@ -28,12 +29,7 @@ class CongratsShower(var parent: ViewGroup, var context: Context) {
     /**
      * Drawable used as a paper piece. This drawable can be replace upon developers choice.
      */
-    var mDrawable = ContextCompat.getDrawable(context, R.drawable.paper_piece)!!
-
-    init {
-        mPaperHeight = convertDpToPixel(mDrawable.intrinsicHeight.toFloat(), context)
-        mPaperWidth = convertDpToPixel(mDrawable.intrinsicWidth.toFloat(), context)
-    }
+    var mDrawable: Drawable
 
     /**
      * Handler variable used for executing the runnables that will stop or start the shower.
@@ -65,15 +61,34 @@ class CongratsShower(var parent: ViewGroup, var context: Context) {
     var mElevation = 30F
 
     /**
+     * It is the root layout of the Activity in which you want the shower to be performed.
+     */
+    var mRootLayout: ViewGroup
+
+    /**
+     * Instance of the context of the activity in which the shower is to be performed.
+     */
+    private var mContext: Context
+
+    constructor(rootLayout: ViewGroup, context: Context) {
+        this@CongratsShower.mRootLayout = rootLayout
+        this@CongratsShower.mContext = context
+
+        mDrawable = ContextCompat.getDrawable(mContext, R.drawable.paper_piece)!!
+        mPaperHeight = convertDpToPixel(mDrawable.intrinsicHeight.toFloat(), mContext)
+        mPaperWidth = convertDpToPixel(mDrawable.intrinsicWidth.toFloat(), mContext)
+    }
+
+    /**
      * This function is responsible for animating the paper pieces.
      */
     private fun performShower() {
         // checking screen width and height for calculation required for creating animation
-        val screenWidth = parent.width.toFloat()
-        val screenHeight = parent.height.toFloat()
+        val screenWidth = mRootLayout.width.toFloat()
+        val screenHeight = mRootLayout.height.toFloat()
 
         // this is the imageView that will be dynamically added to the screen
-        val paperPiece: ImageView = AppCompatImageView(context)
+        val paperPiece: ImageView = AppCompatImageView(mContext)
         paperPiece.setImageDrawable(mDrawable)
         paperPiece.elevation =
             mElevation// elevating the paper pieces so that they appear over the dialog.
@@ -84,7 +99,7 @@ class CongratsShower(var parent: ViewGroup, var context: Context) {
         val colorArray = arrayOf("#ffb49b", "#ffa990", "#ffc5ab", "#ffa38a")
 
         // setting random color to the paper piece only if the default drawable is used
-        if (mDrawable == ContextCompat.getDrawable(context, R.drawable.paper_piece)) {
+        if (mDrawable == ContextCompat.getDrawable(mContext, R.drawable.paper_piece)) {
 //          a random number from 0 to 3 is generated and the element at that index in the colorArray
 //          is used as a color for the incoming paper piece.
             paperPiece.setColorFilter(Color.parseColor(colorArray[(Math.random() * (3 + 1) + 0).toInt()]))
@@ -112,7 +127,7 @@ class CongratsShower(var parent: ViewGroup, var context: Context) {
         // object animator for rotating the paper about the z-axis
         val rotator =
             ObjectAnimator.ofFloat(paperPiece, View.ROTATION, 0f, random.nextFloat() * 360)
-        parent.addView(paperPiece)
+        mRootLayout.addView(paperPiece)
         val setOfShowerAnimation = AnimatorSet()
         setOfShowerAnimation.interpolator = AccelerateInterpolator(1.5f)
         // playing the rotation animation and translation motion altogether at a time
@@ -128,7 +143,7 @@ class CongratsShower(var parent: ViewGroup, var context: Context) {
             override fun onAnimationEnd(animation: Animator) {
                 super.onAnimationEnd(animation)
                 // removing the paperPiece when the animation ends to preserve resources
-                parent.removeView(paperPiece)
+                mRootLayout.removeView(paperPiece)
             }
         })
         setOfShowerAnimation.start()
