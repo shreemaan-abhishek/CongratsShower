@@ -69,7 +69,7 @@ class CongratsShower {
      * Instance of the context of the activity in which the shower is to be performed.
      */
     private var mContext: Context
-
+    
     constructor(rootLayout: ViewGroup, context: Context) {
         this@CongratsShower.mRootLayout = rootLayout
         this@CongratsShower.mContext = context
@@ -104,27 +104,25 @@ class CongratsShower {
 //          is used as a color for the incoming paper piece.
             paperPiece.setColorFilter(Color.parseColor(colorArray[(Math.random() * (3 + 1) + 0).toInt()]))
         }
-        // An instance of the Random class used for generating pseudo-random numbers for random animation
+
         val random = Random()
-        // object animator for moving the paper from up to down
         val upToDown = ObjectAnimator.ofFloat(
             paperPiece, View.TRANSLATION_Y,
             -mPaperHeight - 40, screenHeight + mPaperHeight
         )
-        // object animator for moving the paper piece from left to right
         val leftToRight = ObjectAnimator.ofFloat(
             paperPiece, View.TRANSLATION_X,
             Math.random()
                 .toFloat() * (screenWidth + 300 - (-screenWidth + 300) + 1) + (-screenWidth + 300),
             random.nextInt((screenWidth - mPaperWidth).toInt()).toFloat()
         )
-        // object animator for rotating the paper about the x-axis
+
         val rotatorX =
             ObjectAnimator.ofFloat(paperPiece, View.ROTATION_X, 0f, random.nextFloat() * 1500)
-        // object animator for rotating the paper piece about the y-axis
+
         val rotatorY =
             ObjectAnimator.ofFloat(paperPiece, View.ROTATION_Y, 0f, random.nextFloat() * 1500)
-        // object animator for rotating the paper about the z-axis
+
         val rotator =
             ObjectAnimator.ofFloat(paperPiece, View.ROTATION, 0f, random.nextFloat() * 360)
         mRootLayout.addView(paperPiece)
