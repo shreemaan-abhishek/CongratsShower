@@ -11,7 +11,9 @@ Download demo app from: https://github.com/DopeDevX/CongratsShower/raw/master/DE
 
 # How to use?
 
-1. Include maven into the repositories block present inside allprojects block in your project level build.gradle file. 
+1. Include maven into the repositories block present inside allprojects block in your project level ```build.gradle```(For Groovy) ```build.gradle.kts```(For kotlin) file. 
+
+   **Groovy :** 
 
     ```
     allprojects {
@@ -21,12 +23,33 @@ Download demo app from: https://github.com/DopeDevX/CongratsShower/raw/master/DE
        }
     }
     ```
-2. Add the following line inside the dependencies block of your project level build.gradle file.
+    
+   **Kotlin :**
 
+    ```
+    allprojects {
+       repositories {
+          jcenter()
+          maven { url = uri("https://jitpack.io")} // add this line
+       }
+    }
+    ```
+    
+2. Add the following line inside the dependencies block of your module level ```build.gradle```(For Groovy) ```build.gradle.kts```(For kotlin) file.
+
+    **Groovy :**
     ```
     	dependencies {
             ...
 	          implementation 'com.github.DopeDevX:CongratsShower:1.69.420' // add this line
+            ...
+	        }
+    ```
+     **Kotlin :**
+    ```
+    	dependencies {
+            ...
+	          implementation ("com.github.DopeDevX:CongratsShower:1.69.420") // add this line
             ...
 	        }
     ```
